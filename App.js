@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity,Alert } from 'react-native';
-import { Constants, Updates } from 'expo'; 
+import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Constants, Updates } from 'expo';
+import { Block, Button } from 'esai-framework';
 export default class App extends React.Component {
   state = { v: 'Checking for updates...', time: 'Never' };
   componentDidMount() {
@@ -10,7 +11,7 @@ export default class App extends React.Component {
     this.setState({ v, time: new Date().toISOString() });
   };
   check = async () => {
-    this.setValue('Güncelleştirme kontrol ediliyor...'); 
+    this.setValue('Güncelleştirme kontrol ediliyor...');
     console.log("ismail")
 
     try {
@@ -45,7 +46,8 @@ export default class App extends React.Component {
           {this.state.v}
           {'\n\nLast check: '}
           {this.state.time}
-        </Text>
+        </Text> 
+        <Button round uppercase color="error" onPress={this.check}>Güncelle</Button>
         <TouchableOpacity onPress={this.check}>
           <Text style={styles.paragraph}>Check Again</Text>
         </TouchableOpacity>
