@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Constants, Updates } from 'expo';
-
+import { Text, View, StyleSheet, TouchableOpacity,Alert } from 'react-native';
+import { Constants, Updates } from 'expo'; 
 export default class App extends React.Component {
   state = { v: 'Checking for updates...', time: 'Never' };
   componentDidMount() {
@@ -11,21 +10,27 @@ export default class App extends React.Component {
     this.setState({ v, time: new Date().toISOString() });
   };
   check = async () => {
-    this.setState({ v: 'Checking for updates...' });
+    this.setValue('Güncelleştirme kontrol ediliyor...'); 
     console.log("ismail")
 
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
         console.log(update)
-        this.setValue('Update available');
+        this.setValue('Güncelleştirme Yükleniyor');
         await Updates.fetchUpdateAsync();
+        Alert.alert(
+          'GUNCELLEME',
+          'YENİ GÜNCELLEŞTİRME GELMİŞTİR',
+          [{ text: 'OK', onPress: () => Updates.reloadFromCache() }],
+          { cancelable: false }
+        )
         // ... notify user of update ...
-        Updates.reloadFromCache();
-      } else this.setValue('No update available');
+        //Updates.reloadFromCache();
+      } else this.setValue('Güncelleştirme Yok');
     } catch (e) {
       // handle or log error
-      this.setValue('Update check failed');
+      this.setValue('Güncelleştirme Hatası');
     }
 
 
@@ -45,7 +50,7 @@ export default class App extends React.Component {
           <Text style={styles.paragraph}>Check Again</Text>
         </TouchableOpacity>
         <Text>
-          ismail çetin nasılsın abi
+          ismail çetin nasılsın abi :)
         </Text>
       </View>
     );
